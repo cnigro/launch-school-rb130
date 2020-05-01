@@ -85,6 +85,28 @@ class TodoList
     selection
   end
 
+  def find_by_title(title)
+    results = select do |todo|
+      todo.title == title
+    end
+    results.size.zero? ? nil : results.first
+  end
+
+  def all_done
+  end
+
+  def all_not_done
+  end
+
+  def mark_done
+  end
+
+  def mark_all_done
+  end
+
+  def mark_all_undone
+  end
+
   def to_s
     text = "#{title}\n"
     text << @todos.map(&:to_s).join("\n")
@@ -101,14 +123,16 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-list.each do |todo|
-  puts todo
-end
+p list.find_by_title("Buy milk")
 
-todo1.done!
+# list.each do |todo|
+#   puts todo
+# end
 
-results = list.select do |todo|
-  todo.done?
-end
+# todo1.done!
 
-p results
+# results = list.select do |todo|
+#   todo.done?
+# end
+
+# p results
