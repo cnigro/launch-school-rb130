@@ -70,6 +70,12 @@ class TodoList
     @todos.delete(item_at(index))
   end
 
+  def each
+    @todos.each do |todo|
+      yield(todo)
+    end
+  end
+
   def to_s
     text = "#{title}\n"
     text << @todos.map(&:to_s).join("\n")
@@ -82,46 +88,10 @@ todo2 = Todo.new("Clean room")
 todo3 = Todo.new("Go to gym")
 list = TodoList.new("Today's Todos")
 
-# # Adding to the list
 list.add(todo1)
 list.add(todo2)
 list.add(todo3)
-# p list.add(1) # TypeError
 
-# # <<
-# # same behavior as add
-# p list << todo1
-# p list << 1
-
-# # Interrogating the list
-# p list.size  # return 3
-# p list.first # return todo1
-# p list.last  # return todo3
-# p list.to_a  # return array of all todos
-# p list.done? # return true if all todos are done, else false
-
-# # Retrieving an item from th elist
-# p list.item_at      # ArgumentError
-# p list.item_at(1)   # return 2nd item
-# p list.item_at(100) # IndexError
-
-# # Marking items in the list
-# p list.mark_done_at      # ArgumentError
-# p list.mark_done_at(1)   # Mark 2nd item as done
-# p list.mark_done_at(100) # IndexError
-
-# list.mark_undone_at      # ArgumentError
-# list.mark_undone_at(1)   # Mark 2nd item as not done
-# list.mark_undone_at(100) # IndexError
-
-# list.done! # Mark all items as done
-
-# # Deleting from the list
-# list.shift          # remove and return first item in list
-# list.pop            # remove and return last item in list
-# list.remove_at      # ArgumentError
-# p list.remove_at(1)   # remove and return 2nd item
-# p list.remove_at(100) # IndexError
-
-# # Output the list
-puts list.to_s # return string representation of the list
+list.each do |todo|
+  puts todo
+end
