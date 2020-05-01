@@ -20,9 +20,7 @@ class TodoList
     end
   end
 
-  def <<(item)
-    add(item)
-  end
+  alias_method :<<, :add
 
   def size
     @todos.size
@@ -37,7 +35,7 @@ class TodoList
   end
 
   def to_a
-    @todos
+    @todos.clone
   end
 
   def done?
@@ -57,7 +55,7 @@ class TodoList
   end
 
   def done!
-    @todos.map { |item| item.done! }
+    @todos.each_index { |idx| mark_done_at(idx) }
   end
 
   def shift
@@ -73,7 +71,9 @@ class TodoList
   end
 
   def to_s
-    @todos.each { |todo| puts todo }
+    text = "#{title}\n"
+    text << @todos.map(&:to_s).join("\n")
+    text
   end
 end
 
@@ -124,4 +124,4 @@ list.add(todo3)
 # p list.remove_at(100) # IndexError
 
 # # Output the list
-list.to_s # return string representation of the list
+puts list.to_s # return string representation of the list
