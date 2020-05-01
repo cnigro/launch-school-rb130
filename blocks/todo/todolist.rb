@@ -86,25 +86,29 @@ class TodoList
   end
 
   def find_by_title(title)
-    results = select do |todo|
-      todo.title == title
-    end
-    results.size.zero? ? nil : results.first
+    select { |todo| todo.title == title }.first
   end
 
   def all_done
+    select { |todo| todo.done? }
   end
 
   def all_not_done
+    select { |todo| !todo.done? }
   end
 
-  def mark_done
+  def mark_done(title)
+    select do |todo|
+      todo.done! if todo.title == title
+    end
   end
 
   def mark_all_done
+    each { |todo| todo.done! }
   end
 
   def mark_all_undone
+    each { |todo| todo.undone! }
   end
 
   def to_s
@@ -123,13 +127,16 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-p list.find_by_title("Buy milk")
+# p list.find_by_title("Buy milk")
 
 # list.each do |todo|
 #   puts todo
 # end
 
-# todo1.done!
+todo1.done!
+
+p list.all_done
+p list.all_not_done
 
 # results = list.select do |todo|
 #   todo.done?
