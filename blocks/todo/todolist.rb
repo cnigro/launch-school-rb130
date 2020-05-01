@@ -74,6 +74,15 @@ class TodoList
     @todos.each do |todo|
       yield(todo)
     end
+    self
+  end
+
+  def select
+    selection = TodoList.new(title)
+    each do |todo|
+      selection << todo if yield(todo)
+    end
+    selection
   end
 
   def to_s
@@ -95,3 +104,11 @@ list.add(todo3)
 list.each do |todo|
   puts todo
 end
+
+todo1.done!
+
+results = list.select do |todo|
+  todo.done?
+end
+
+p results
